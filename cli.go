@@ -135,11 +135,15 @@ func RegisterCommand(name string, function CmdFunc) {
 	commands = append(commands, Command{name, function})
 }
 
+func Default(function CmdFunc) {
+	commands = append(commands, Command{"", function})	
+}
+
 func Exec() {
 	if len(ARGS) == 0 {
 		for _, c := range commands {
 			if c.Name == "" {
-				c.Function(ARGS[1:], FLAGS)
+				c.Function([]string{}, FLAGS)
 			}
 		}
 		return
